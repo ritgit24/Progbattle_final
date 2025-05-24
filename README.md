@@ -4,10 +4,10 @@ A web portal where users can upload their bots to fight against the other bots a
 
 EXPLAINING THE WORKFLOW OF MY WEBPAGE UI :
 
-The web application opens with a home page wherein I have displayed the title of the tournament as Progbattle, and contains a login and a signup button.
-
+The web application opens with a home page wherein I have displayed the title of the tournament as Progbattle, and contains a login and a signup button. 
 When a new user checks in the home page, he/she should click on the sign in button to participate in the tournament. 
 Upon successful signin , an alert message “Successful signin “is displayed on the screen and the user is automatically navigated to the login page. 
+
 Upon filling in the credentials correctly, the user is automatically navigated to the Create Teams Portal.
 (If an already existing user logs in, who has created a team previously, then he/she will be automatically navigated to the tournament page upon login.A person can create only one team using the same email and password)
 Here I have decided that each team will have a single person. The user creates his/her team by entering the team name and this team name is registered in the “teams” table of my database. 
@@ -16,6 +16,7 @@ Upon successful team creation, the user is automatically directed to the tournam
 The tournament page also has a leaderboard to its left side, which displays the registered teams in a descending order of their score. 
 The leaderboard has a refresh button too, which refreshes the leaderboard(to update the team scores if match is fought). 
 I have displayed the match rules and scoring policies for teams on the screen.
+
 The users can submit their bot files by clicking on the “Submit Bot” option to fight against  the system bot in ROUND 1 ,and wait for the match results to be displayed. 
 Once the match is over and the match details and winner are updated on the screen, the team’s score is also updated in the database. 
 Consequenly, a show simulation button appears on the screen. Upon clicking this button, a simulation of the bot match is shown on the screen using HTML canvas, done using the frontend.
@@ -28,11 +29,17 @@ My backendnew contains the backend files, written in python and the former folde
 Backend : 
 1.My routing file is app.py, which contains my database manager and has the routes :
 /login, /signin, /team, / uploadbot, /getteams, / teams, etc.
-2.I have used psycopg2 as my database connection manager. I have used FASTAPI app to handle my requests, and uvicorn to start the ASGI server on localhost-8000. 
+
+2.I have used psycopg2 as my database connection manager. I have used FASTAPI app to handle my requests, and uvicorn to start the ASGI server on localhost-8000.
+
 3.I have used pydantic Basemodels as models for various entities in my system. For example, class UserCreate(BaseModel): 
+
     email: str
+    
     password: str
+    
     name: str
+    
 is the model used for a user signup. 
 4.To hash the passwords, I have used the passlib Python library and the algorithm used is HMAC using SHA-256.
 5. I have used Dependency injection at various places in my code for example : 
