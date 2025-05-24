@@ -148,23 +148,39 @@ Leaderboard : Displays all teams ranked by score, and gets refreshed upon clicki
 To RUN LOCALLY IN LINUX:-
 
 1. Clone the repository
+
 git clone https://github.com/ritgit24/Progbattle_final
+
 cd backendnew
- 2. Create and activate a Python virtual environment
+
+2. Create and activate a Python virtual environment
+
 python3 -m venv venv
+
 3. Install dependencies
+
 pip install -r requirements.txt 
+
 4. Start the server
+
 python app.py
+
 Use cd.. command to go back to main directory
+
 1.Now to navigate to the frontend folder
+   
    cd assignment1/nextjs-dashboard
+   
 2. To install the dependencies 
-   npm install  
-3. To  start the developement server
+
+    npm install
+   
+4. To  start the developement server
+
    npm run dev 
 
 TEST USING POSTMAN 
+
 To test the backend routes using postman, run the following steps :
 
 1.POST /signup
