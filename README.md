@@ -1,6 +1,6 @@
 TASK-PROGBATTLE
 
-A web portal where users can upload their bots to fight against the other bots and see the simulation video of the match to improve their bots.
+*A web portal where users can upload their bots to fight against the other bots and see the simulation video of the match to improve their bots.*
 
 EXPLAINING THE WORKFLOW OF MY WEBPAGE UI :
 
@@ -22,9 +22,10 @@ Once the match is over and the match details and winner are updated on the scree
 Consequenly, a show simulation button appears on the screen. Upon clicking this button, a simulation of the bot match is shown on the screen using HTML canvas, done using the frontend.
 Upon clicking the refresh button, the team’s updated scores are visible on the leaderboard too.
 
-WORK/ RESEARCH
+*WORK/ RESEARCH*
 
 EXPLAINING MY CODE : 
+
 I have submitted a main folder called Campus Compass, which has 2 subfolders : assignment1/nextjs-dashboard and backendnew. 
 My backendnew contains the backend files, written in python and the former folder contains the frontend written in nextjs. 
 
