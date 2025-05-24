@@ -193,6 +193,7 @@ def send_verification_email(to_email: str, user_name: str):
     Hello {user_name},
 
     Thanks for signing up! Please click the link below to verify your Gmail address.
+    verification_link = f"http://localhost:8000/verify?email={to_email}"
 
     We hope you have a good journey with us and enjoy our game. 
 
