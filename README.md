@@ -184,80 +184,101 @@ TEST USING POSTMAN
 To test the backend routes using postman, run the following steps :
 
 1.POST /signup
-•	URL: http://localhost:8000/signup
-•	Body:
-o	Select Body → raw → choose JSON format
-o	Provide:
-json
-{
-  "email": "test@example.com",
-  "password": "yourpassword",
-  "name": "Test User"
-}
 
-3. POST /login
-•	URL: http://localhost:8000/login
+•	URL: http://localhost:8000/signup
+
 •	Body:
+
+o	Select Body → raw → choose JSON format
+
+o	Provide:
+
+       json
+      {
+    "email": "test@example.com",
+     "password": "yourpassword",
+    "name": "Test User"
+     }
+
+2. POST /login
+   
+•	URL: http://localhost:8000/login
+
+•	Body:
+
 o	Select Body → raw → choose JSON
+
 o	Provide:
 json
 {
   "email": "test@example.com",
   "password": "yourpassword"
 }
-Response: json
-{
-  "access_token": "<JWT_TOKEN>",
-  "token_type": "bearer",
-  "name": "Test User",
-  "email": "test@example.com",
-  "user_id": 1,
-  "has_team": false,
-  "team_name": null
-}
 
-4. GET /users/{user_id}/team
+     Response: json
+
+       {
+     "access_token": "<JWT_TOKEN>",
+     "token_type": "bearer",
+     "name": "Test User",
+    "email": "test@example.com",
+    "user_id": 1,
+    "has_team": false,
+    "team_name": null
+       }
+
+3. GET /users/{user_id}/team
+   
 •	URL:  http://localhost:8000/users/1/team  (Replace 1 with your user_id)
 •	Authorization Tab:
 o	Type: Bearer Token
 o	Token: Paste the access_token from login response
-If no team exists:
-json
-{
-  "has_team": false,
-  "team": null
-}
+         
+	 If no team exists:
+     json
+         {
+          "has_team": false,
+       "team": null
+         }
 
-5. POST /uploadbot/
+4. POST /uploadbot/
+
 URL:  http://localhost:8000/uploadbot/
-•	Authorization: Bearer Token with your token.
-•	Body → form-data:
-o	Key: file
-  Type: File
-	Upload a .py file (your bot).
- Response: json
-{
-  "status": "success",
-  "output": "Final Score: {'bot1': 5, 'bot2': 2}\nWinner: bot1",
-  "winner": "bot1",
-  "match_log": [...]
-}
 
-6.	GET  http://localhost:8000/users/1/team
+•	Authorization: Bearer <Token with your token.>
+
+•	Body → form-data:
+
+o	Key: file
+
+  Type: File
+  
+	Upload a .py file (your bot).
+        Response: json
+        {
+       "status": "success",
+        "output": "Final Score: {'bot1': 5, 'bot2': 2}\nWinner: bot1",
+         "winner": "bot1",
+       "match_log": [...]
+        }
+
+5.	GET  http://localhost:8000/users/1/team
+   
 •	Replace 1 with your user ID.
 •	Authorization: Bearer token
-Response: json
-{
-  "has_team": true,
-  "team": {
-    "team_id": 1,
-    "team_name": "TeamA",
-    "created_by": 1,
-    "team_score": 2
-  }
-}
 
-7. GET /getteams
+         Response: json
+           {
+          "has_team": true,
+        "team": {
+           "team_id": 1,
+          "team_name": "TeamA",
+           "created_by": 1,
+        "team_score": 2
+          }
+         }
+
+6. GET /getteams
 •	URL: http://localhost:8000/getteams
 •	Response: List of teams (in JSON)
 
