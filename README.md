@@ -193,10 +193,10 @@ o	Select Body → raw → choose JSON format
 
 o	Provide:
 
-       json
-      {
+    json
+    {
     "email": "test@example.com",
-     "password": "yourpassword",
+    "password": "yourpassword",
     "name": "Test User"
      }
 
@@ -217,15 +217,15 @@ json
 
      Response: json
 
-       {
+     {
      "access_token": "<JWT_TOKEN>",
      "token_type": "bearer",
      "name": "Test User",
-    "email": "test@example.com",
-    "user_id": 1,
-    "has_team": false,
-    "team_name": null
-       }
+     "email": "test@example.com",
+     "user_id": 1,
+     "has_team": false,
+     "team_name": null
+      }
 
 3. GET /users/{user_id}/team
    
@@ -234,11 +234,12 @@ json
 o	Type: Bearer Token
 o	Token: Paste the access_token from login response
          
-	 If no team exists:
-     json
-         {
-          "has_team": false,
-       "team": null
+If no team exists:
+
+        json
+        {
+        "has_team": false,
+        "team": null
          }
 
 4. POST /uploadbot/
@@ -256,30 +257,32 @@ o	Key: file
 	Upload a .py file (your bot).
         Response: json
         {
-       "status": "success",
+        "status": "success",
         "output": "Final Score: {'bot1': 5, 'bot2': 2}\nWinner: bot1",
-         "winner": "bot1",
-       "match_log": [...]
+        "winner": "bot1",
+        "match_log": [...]
         }
 
 5.	GET  http://localhost:8000/users/1/team
    
 •	Replace 1 with your user ID.
-•	Authorization: Bearer token
+•	Authorization: Bearer <token>
 
          Response: json
            {
           "has_team": true,
-        "team": {
-           "team_id": 1,
+          "team": {
+          "team_id": 1,
           "team_name": "TeamA",
-           "created_by": 1,
-        "team_score": 2
+          "created_by": 1,
+          "team_score": 2
           }
          }
 
 6. GET /getteams
+   
 •	URL: http://localhost:8000/getteams
+
 •	Response: List of teams (in JSON)
 
 
