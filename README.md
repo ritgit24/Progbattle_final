@@ -8,6 +8,8 @@ The web application opens with a home page wherein I have displayed the title of
 When a new user checks in the home page, he/she should click on the sign in button to participate in the tournament. 
 Upon successful signin , an alert message “Successful signin “is displayed on the screen and the user is automatically navigated to the login page. 
 
+*If the gmail of the user is verified(to be a valid gmail account), then a verification email is sent to them*
+
 Upon filling in the credentials correctly, the user is automatically navigated to the Create Teams Portal.
 (If an already existing user logs in, who has created a team previously, then he/she will be automatically navigated to the tournament page upon login.A person can create only one team using the same email and password)
 Here I have decided that each team will have a single person. The user creates his/her team by entering the team name and this team name is registered in the “teams” table of my database. 
@@ -58,7 +60,9 @@ Here FastAPI dependency extracts and decodes the current user's JWT token. Depen
 
 6. I have implemented CORS middleware in my system using from CORSMiddleware from fastapi.middleware.cors
 
-7. ABOUT THE /uploadbot/ route (The heart of the web application )
+7. The backend generates a verification email with a unique token or link that the user must click to confirm their email address. I have used an email-sending library (Python’s smtplib) connected to a Gmail SMTP server. The email is sent to the user’s Gmail inbox (sometimes it might go to the Spam folder initially). 
+
+8. ABOUT THE /uploadbot/ route (The heart of the web application )
    
 •	Accepts a file (UploadFile) and the current authenticated user via dependency injection (Depends(get_current_user)).
 
