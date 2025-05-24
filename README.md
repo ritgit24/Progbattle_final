@@ -22,6 +22,8 @@ Once the match is over and the match details and winner are updated on the scree
 Consequenly, a show simulation button appears on the screen. Upon clicking this button, a simulation of the bot match is shown on the screen using HTML canvas, done using the frontend.
 Upon clicking the refresh button, the team’s updated scores are visible on the leaderboard too.
 
+WORK/ RESEARCH
+
 EXPLAINING MY CODE : 
 I have submitted a main folder called Campus Compass, which has 2 subfolders : assignment1/nextjs-dashboard and backendnew. 
 My backendnew contains the backend files, written in python and the former folder contains the frontend written in nextjs. 
@@ -45,10 +47,9 @@ is the model used for a user signup.
 
 4.To hash the passwords, I have used the passlib Python library and the algorithm used is HMAC using SHA-256.
 
-5. I have used Dependency injection at various places in my code for example :
+I have used Dependency injection at various places in my code for example :
    
-async def get_current_user(token: str = Depends(oauth2_scheme)): 
-
+    async def get_current_user(token: str = Depends(oauth2_scheme)): 
     credentials_exception = HTTPException(
     #code )
     
@@ -57,26 +58,43 @@ Here FastAPI dependency extracts and decodes the current user's JWT token. Depen
 6. I have implemented CORS middleware in my system using from CORSMiddleware from fastapi.middleware.cors
 
 7. ABOUT THE /uploadbot/ route (The heart of the web application )
+   
 •	Accepts a file (UploadFile) and the current authenticated user via dependency injection (Depends(get_current_user)).
+
 •	Validates that the uploaded file ends with .py.
+
 •	Generates a unique filename using uuid4() to prevent name collisions.
+
 •	Saves the uploaded file to the server using shutil.copyfileobj() — this copies the file’s contents from the upload stream to a real file on disk.
+
 •	I have used subprocess.run() to execute a match between:
-       A pre-defined system bot (SYSTEM_BOT_PATH)
-The uploaded bot file
+       A pre-defined system bot (SYSTEM_BOT_PATH) and the uploaded bot file
+       
 •	The subprocess runs a Python script (ENGINE_PATH) that handles the match logic.
+
 •	The code captures stdout and stderr from the match.
+
 •	If the match fails (non-zero return code in stderr), returns an error.
+
 • The code looks through the output for a line like "Winner: bot1" to determine the winner.
+
 •	Parses the full match output using parse_match_output() to extract scores
+
 •	Based on the scores, I have calculated a new team score.
+
 •	It Updates the user’s team score in the database (teams table) using their user_id.
+
 •	The code returns a structured JSON response with:
 The full output
+
 The winner
+
 Status of the operation
+
 The match logs
-•	The code then deletes the temporary uploaded bot file from disk to avoid clutter.
+
+•	The code then deletes the temporary uploaded bot file from disk to avoid clutter. I use the match logs to make the animation video of the match in the frontend.
+       
 
 I have tried to well comment my app.py file to explain my code to the fullest.
 
@@ -110,8 +128,10 @@ Leaderboard : Displays all teams ranked by score, and gets refreshed upon clicki
 - `/teams ` for user operations (create team)
 - `/tournament ` for viewing all teams and bot upload
 - Simulation rendered using  HTML Canvas after a match
+- The match_logs are sent in the response upon hitting the /uploadbot/ route. These match logs are used by the MatchSimulation component to draw and combine various frames using HTML canvas
   
 4.	The ui folder contains various files such as login-form, signin-form, tournament-ui, team-management, etc. which are the Frontend files for /login , / signin , /tournament and /teams respectively.
+   
 5.	FOR THE CODE, I have used Typescript + Javascript along with Tailwind CSS. 
 
 6.	My nextjs-dashboard folder also contains a global.css file. This file basically combines Tailwind CSS directives with custom styling for <input type="number"> elements.
