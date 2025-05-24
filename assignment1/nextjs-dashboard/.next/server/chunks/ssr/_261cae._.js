@@ -5,111 +5,6 @@ module.exports = {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
-// import AcmeLogo from '@/app/ui/acme-logo';
-// import { ArrowRightIcon } from '@heroicons/react/24/outline';
-// import Link from 'next/link';
-// import Image from 'next/image';
-// export default function Page() {
-//   return (
-//     // // These are Tailwind classes:
-//     // <main className="flex min-h-screen flex-col p-6">
-//     //   <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52"></div>
-//     // <main className="flex min-h-screen flex-col p-6">
-//       <main className="bg-black text-white">
-//       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-//         <div >
-//         <div
-//   className="relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black"
-// />
-// <img src="https://i.pinimg.com/736x/cf/5a/4d/cf5a4ddeacf305312a16f1ec304aa6d3.jpg" style={{ width: '100px', height: '100px' }}  />
-//           <p className={`text-xl text-white-1000 md:text-3xl md:leading-normal font- font-medium sm:w-auto justify-center`}>
-//             Welcome to PROGBATTLE - YOUR GATEWAY TO MISSION MAZE
-//           </p>
-//           <div className="flex flex-col gap-2 mt-4 ml-4">
-//           <Link
-//             href="/login"
-//             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-//           >
-//             <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-//           </Link>
-//           </div>
-//           <div className="flex flex-col gap-2 mt-4 ml-4">
-//           <Link
-//             href="/signin"
-//             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-//           >
-//             <span>Sign in</span> <ArrowRightIcon className="w-5 md:w-6" />
-//           </Link>
-//           </div>
-//         </div>
-//         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-//       <img src="https://wallpapersok.com/images/high/cool-gaming-desktop-pac-man-vector-02vnnqwadou5hq2b.jpg"/> 
-//         </div>
-//       </div>
-//     </main>
-//   );
-// }
-// import { ArrowRightIcon } from '@heroicons/react/24/outline';
-// import Link from 'next/link';
-// export default function Page() {
-//   return (
-//     <main className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">
-//       <div className="container mx-auto px-6 py-12 flex flex-col md:flex-row items-center">
-//         {/* Left Column - Content */}
-//         <div className="md:w-1/2 space-y-8">
-//           <div className="space-y-4">
-//             <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-//               PROGBATTLE
-//             </h1>
-//             <h2 className="text-xl md:text-2xl font-medium text-gray-300">
-//               YOUR GATEWAY TO MISSION MAZE
-//             </h2>
-//             <p className="text-gray-400">
-//               Compete, conquer, and climb the leaderboards in our programming battle arena
-//             </p>
-//           </div>
-//           {/* Auth Buttons */}
-//           <div className="flex flex-col space-y-4 w-full max-w-xs">
-//             <Link
-//               href="/login"
-//               className="flex items-center justify-between rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 text-sm font-medium text-white transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-lg md:text-base"
-//             >
-//               <span>Log in</span>
-//               <ArrowRightIcon className="w-5 h-5" />
-//             </Link>
-//             <Link
-//               href="/signin"
-//               className="flex items-center justify-between rounded-lg bg-gradient-to-r from-purple-600 to-purple-500 px-6 py-3 text-sm font-medium text-white transition-all hover:from-purple-500 hover:to-purple-400 hover:shadow-lg md:text-base"
-//             >
-//               <span>Sign up</span>
-//               <ArrowRightIcon className="w-5 h-5" />
-//             </Link>
-//           </div>
-//         </div>
-//         {/* Right Column - Visual Element */}
-//         <div className="md:w-1/2 mt-12 md:mt-0">
-//           <div className="relative">
-//             {/* Abstract tech pattern */}
-//             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I0OTYxIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')] opacity-20"></div>
-//             {/* Code terminal mockup */}
-//             <div className="relative bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700">
-//               <div className="flex space-x-2 mb-4">
-//                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
-//                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-//                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-//               </div>
-//               <div className="font-mono text-sm text-green-400">
-//                 <p>$ npm start battle</p>
-//                 <p className="mt-2 text-white">Initializing mission maze...</p>
-//                 <p className="text-blue-400">Loading challenges ███████▒ 90%</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </main>
-//   );
-// }
 __turbopack_esm__({
     "default": (()=>Page)
 });
@@ -133,12 +28,12 @@ function Page() {
                                 children: "Log in"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 132,
+                                lineNumber: 14,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 128,
+                            lineNumber: 10,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
@@ -148,23 +43,23 @@ function Page() {
                                 children: "Sign up"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 138,
+                                lineNumber: 20,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 134,
+                            lineNumber: 16,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 127,
+                    lineNumber: 9,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 126,
+                lineNumber: 8,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -177,12 +72,12 @@ function Page() {
                             children: "PROGBATTLE"
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 147,
+                            lineNumber: 29,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 146,
+                        lineNumber: 28,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -190,7 +85,7 @@ function Page() {
                         children: "YOUR GATEWAY TO MISSION MAZE"
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 153,
+                        lineNumber: 35,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -203,27 +98,27 @@ function Page() {
                                         className: "w-3 h-3 rounded-full bg-red-500"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 160,
+                                        lineNumber: 42,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-3 h-3 rounded-full bg-yellow-500"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 161,
+                                        lineNumber: 43,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-3 h-3 rounded-full bg-green-500"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 162,
+                                        lineNumber: 44,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 159,
+                                lineNumber: 41,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -233,7 +128,7 @@ function Page() {
                                         children: "$ npm start battle"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 165,
+                                        lineNumber: 47,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -241,7 +136,7 @@ function Page() {
                                         children: "Initializing mission maze..."
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 166,
+                                        lineNumber: 48,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$1$2e$6_react$2d$dom$40$19$2e$0$2e$0_react$40$19$2e$0$2e$0_$5f$react$40$19$2e$0$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -249,31 +144,31 @@ function Page() {
                                         children: "Loading challenges ███████▒ 90%"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 167,
+                                        lineNumber: 49,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 164,
+                                lineNumber: 46,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 158,
+                        lineNumber: 40,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 144,
+                lineNumber: 26,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 124,
+        lineNumber: 6,
         columnNumber: 5
     }, this);
 }
