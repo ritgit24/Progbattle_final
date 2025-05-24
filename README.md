@@ -99,8 +99,10 @@ The match logs
 I have tried to well comment my app.py file to explain my code to the fullest.
 
 FRONTEND – 
-1.	The folder hierarchy stands as 
-assignment1/nextjs-dashboard
+1.	The folder hierarchy stands as
+   
+          assignment1/nextjs-dashboard
+
           /app
   	           page.tsx
   	           layout.tsx 
@@ -115,11 +117,17 @@ assignment1/nextjs-dashboard
 2.Features
 
 Authentication System : Users can sign up, log in, and get JWT-based authentication tokens.
+
 Team Management : Users can create and view their teams. Team scores are displayed in a leaderboard.
+
 Bot Upload : Users can upload `.py` files (Python bots) which are evaluated in a backend match engine.
+
 Match Result Display :
+
   - After a bot upload, match results are shown (winner, score).
+    
   - A "Show Simulation" button allows visual replay of the match using HTML canvas.
+    
 Leaderboard : Displays all teams ranked by score, and gets refreshed upon clicking the refresh button.
 
 3.UI Structure
