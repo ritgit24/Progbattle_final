@@ -60,7 +60,7 @@ Here FastAPI dependency extracts and decodes the current user's JWT token. Depen
 
 6. I have implemented CORS middleware in my system using from CORSMiddleware from fastapi.middleware.cors
 
-7. The backend generates a verification email with a unique token or link that the user must click to confirm their email address. I have used an email-sending library (Python’s smtplib) connected to a Gmail SMTP server. The email is sent to the user’s Gmail inbox (sometimes it might go to the Spam folder initially). 
+7. The backend generates a verification email with a link that the user must click to confirm their email address. I have used an email-sending library (Python’s smtplib) connected to a Gmail SMTP server. The email is sent to the user’s Gmail inbox (sometimes it might go to the Spam folder initially). 
 
 8. ABOUT THE /uploadbot/ route (The heart of the web application )
    
