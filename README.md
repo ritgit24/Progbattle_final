@@ -27,10 +27,11 @@ I have submitted a main folder called Campus Compass, which has 2 subfolders : a
 My backendnew contains the backend files, written in python and the former folder contains the frontend written in nextjs. 
 
 Backend : 
-1.My routing file is app.py, which contains my database manager and has the routes :
+
+1. My routing file is app.py, which contains my database manager and has the routes :
 /login, /signin, /team, / uploadbot, /getteams, / teams, etc.
 
-2.I have used psycopg2 as my database connection manager. I have used FASTAPI app to handle my requests, and uvicorn to start the ASGI server on localhost-8000.
+2. I have used psycopg2 as my database connection manager. I have used FASTAPI app to handle my requests, and uvicorn to start the ASGI server on localhost-8000.
 
 3.I have used pydantic Basemodels as models for various entities in my system. For example, class UserCreate(BaseModel): 
 
@@ -41,13 +42,20 @@ Backend :
     name: str
     
 is the model used for a user signup. 
+
 4.To hash the passwords, I have used the passlib Python library and the algorithm used is HMAC using SHA-256.
-5. I have used Dependency injection at various places in my code for example : 
+
+5. I have used Dependency injection at various places in my code for example :
+   
 async def get_current_user(token: str = Depends(oauth2_scheme)): 
+
     credentials_exception = HTTPException(
-#code )
+    #code )
+    
 Here FastAPI dependency extracts and decodes the current user's JWT token. Depends(oauth2_scheme) extracts the token from the Authorization: Bearer header.
-6. I have implemented CORS middleware in my system using from CORSMiddleware from fastapi.middleware.cors 
+
+6. I have implemented CORS middleware in my system using from CORSMiddleware from fastapi.middleware.cors
+
 7. ABOUT THE /uploadbot/ route (The heart of the web application )
 •	Accepts a file (UploadFile) and the current authenticated user via dependency injection (Depends(get_current_user)).
 •	Validates that the uploaded file ends with .py.
