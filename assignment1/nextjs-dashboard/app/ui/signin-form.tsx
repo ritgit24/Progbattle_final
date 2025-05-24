@@ -70,7 +70,7 @@ export default function SigninForm() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
+                placeholder="Enter your gmail address. We will send a verification mail to the same(might land up in your spam)"
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />

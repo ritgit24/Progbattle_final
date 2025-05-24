@@ -19,6 +19,9 @@ from pathlib import Path
 import sys
 from typing import List
 import ast
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 #to Initialize FastAPI
 app = FastAPI() ## This creates FastAPI application. A FastAPI app is an instance of the FastAPI class — essentially our web application object.we define routes (API endpoints) on this app using decorators like @app.get(), @app.post(), etc.
 #the app is more of like a backend application
@@ -180,6 +183,36 @@ async def get_current_user(token: str = Depends(oauth2_scheme)): #FastAPI depend
 #read_users() needs a database.
 #Instead of creating it inside, we use Depends(get_db) to inject it from the outside.
 
+def send_verification_email(to_email: str, user_name: str):
+    sender_email = "rbatra06avengers@gmail.com"
+    app_password = "hywu icln mava xtmy"  # Not your Gmail password!
+
+    # Email content
+    subject = "Verify your email address"
+    body = f"""
+    Hello {user_name},
+
+    Thanks for signing up! Please click the link below to verify your Gmail address.
+
+    We hope you have a good journey with us and enjoy our game. 
+
+    Best,
+    Team ProgBattle
+    """
+
+    msg = MIMEMultipart()
+    msg["From"] = sender_email
+    msg["To"] = to_email
+    msg["Subject"] = subject
+
+    msg.attach(MIMEText(body, "plain"))
+
+    # Send the email
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(sender_email, app_password)
+        server.send_message(msg)
+        print("Verification email sent.")
+
 
 # now i am defining the variious routes used in my web portal   
 @app.post("/signup") #Pydantic Models (used in FastAPI, data validation) #a model in Python refers to a class that represents data 
@@ -187,7 +220,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)): #FastAPI depend
 #Pydantic is a Python library used to: #Define data models using regular Python classes. #Validate and parse data automatically (e.g. from JSON, user input).
 async def create_user(user: UserCreate):
     hashed_password = pwd_context.hash(user.password)
-    
+    if user.email.endswith("@gmail.com"):
+     send_verification_email(user.email, user.name)
     try:
         with get_db() as conn:
             with conn.cursor() as cursor:
@@ -225,6 +259,8 @@ async def create_user(user: UserCreate):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
         )
+    
+
     
 @app.get("/protected") #made this to test a protected route
 async def protected_route(current_user: dict = Depends(get_current_user)):
