@@ -189,6 +189,7 @@ Leaderboard : Displays all teams ranked by score, and gets refreshed upon clicki
 - `/signin` and `/login` pages for authentication
 - `/teams ` for user operations (create team)
 - `/tournament ` for viewing all teams and bot upload
+- `/round2start ` for the admin to start the Round-2 of the tournament(Round2 can only initiated by admin)
 - Simulation rendered using  HTML Canvas after a match
 - The match_logs are sent in the response upon hitting the /uploadbot/ route. These match logs are used by the MatchSimulation component to draw and combine various frames using HTML canvas
   
