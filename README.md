@@ -30,7 +30,7 @@ When the admin feels that sufficient number of teams have successfully logged in
 The tournament starts wherein every bot fights every other bot exactly once. The matches between all teams are listed sequentially and the winners are displayed along.
 
 *Here is the google drive link to the demo video of my web application :* https://drive.google.com/file/d/1Kn71yzdNydCp4m6uD6ZbfQPp8yTujjT3/view
-(During the demo video, I uploaded the same bot file for all the active teams hence its showing Draw matches. Kindly consider the same.)
+(During the demo video, I uploaded the same bot file for all the active teams hence its showing Draw matches in Round 2 . Kindly consider the same.)
 
 *WORK/ RESEARCH*
 
