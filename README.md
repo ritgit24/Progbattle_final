@@ -5,7 +5,7 @@
 EXPLAINING THE WORKFLOW OF MY WEBPAGE UI :
 
 The web application opens with a home page wherein I have displayed the title of the tournament as Progbattle, and contains a login and a signup button. 
-When a new user checks in the home page, he/she should click on the sign in button to participate in the tournament. 
+When a new user checks in the home page, he/she should click on the sign in button to participate in the tournament.
 Upon successful signin , an alert message “Successful signin “is displayed on the screen and the user is automatically navigated to the login page. 
 
 *If the gmail of the user is verified(to be a valid gmail account), then a verification email is sent to them*
