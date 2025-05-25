@@ -667,104 +667,6 @@ async def start_round2(
     
     return {"status": "Round 2 tournament started", "bot_count": len(active_bots),"admin_id": current_user["user_id"],"sample_output": output_text.splitlines()}
 
-# async def run_bot_tournament(active_bots: List[tuple]):
-#     results = []
-#     bot_paths = [bot[3] for bot in active_bots]  # bot_file_path is index 3
-    
-#     # Tournament logic (round-robin)
-#     for i in range(len(bot_paths)):
-#         for j in range(i+1, len(bot_paths)):
-#             bot1 = bot_paths[i]
-#             bot2 = bot_paths[j]
-#             team1 = active_bots[i][1]  # team_id
-#             team2 = active_bots[j][1]
-            
-#             try:
-#                 result = subprocess.run(
-#                     [sys.executable, ENGINE_PATH, "--p1", bot1, "--p2", bot2],
-#                     capture_output=True,
-#                     text=True,
-#                     timeout=10
-#                 )
-                
-#                 winner = parse_winner(result.stdout)
-#                 results.append({
-#                     "team1": team1,
-#                     "team2": team2,
-#                     "winner": winner,
-#                     "output": result.stdout
-#                 })
-
-# async def run_bot_tournament(active_bots: List[dict], current_user: dict):
-#     results = []
-#     admin_id = current_user["user_id"]  # Get the admin's user ID
-    
-#     # Access dictionary keys instead of indexes
-#     bot_paths = [bot["bot_file_path"] for bot in active_bots]
-#     team_ids = [bot["team_id"] for bot in active_bots]
-    
-#     # Round-robin matches
-#     for i in range(len(bot_paths)):
-#         for j in range(i+1, len(bot_paths)):
-#             try:
-#                 result = subprocess.run(
-#                     [sys.executable, ENGINE_PATH, "--p1", bot_paths[i], "--p2", bot_paths[j]],
-#                     capture_output=True,
-#                     text=True,
-#                     timeout=10
-#                 )
-                
-#                 winner = parse_winner(result.stdout)
-#                 results.append({
-#                     "team1": team_ids[i],
-#                     "team2": team_ids[j],
-#                     "winner": winner,
-#                     "output": result.stdout
-#                 })
-                
-#             except Exception as e:
-#                 print(f"Match failed : {str(e)}")
-    
-#     # Save results and update scores
-#     with get_db() as conn:
-#         with conn.cursor() as cursor:
-#             # Store tournament results
-#             # cursor.execute(
-#             #     "INSERT INTO tournaments (results) VALUES (%s)",
-#             #     (json.dumps(results),)
-#             # )
-            
-#             # # Update team scores based on wins
-#             # for team_id in set([r["winner"] for r in results if r["winner"] != "unknown"]):
-#             #     cursor.execute(
-#             #         "UPDATE teams SET team_score = team_score + 1 WHERE team_id = %s",
-#             #         (team_id,)
-#             #     )
-#             cursor.execute(
-#             """
-#             INSERT INTO tournaments (created_by, results)
-#             VALUES (%s, %s)
-#             RETURNING tournament_id
-#             """,
-#             (admin_id, json.dumps({
-#                 "matches": results,
-#                 "summary": {
-#                     "total_matches": len(results),
-#                     "winners": [r["winner"] for r in results if r["winner"] != "unknown"]
-#                 }
-#             }))
-#             )
-        
-#         # Update team scores
-#             for team_id in set([r["winner"] for r in results if r["winner"] != "unknown"]):
-#              cursor.execute(
-#                 "UPDATE teams SET team_score = team_score + 3 WHERE team_id = %s",  # 3 points per win
-#                 (team_id,)
-#              )
-            
-#             conn.commit()
-    
-#     return results
 
 async def run_bot_tournament(active_bots: List[dict], current_user: dict):
     results = []
@@ -815,7 +717,7 @@ async def run_bot_tournament(active_bots: List[dict], current_user: dict):
                 print(result.stdout.strip()[:500] + "...")  # Show first 500 chars of output
                 
             except subprocess.TimeoutExpired:
-                error_msg = f"⏰ Timeout: {team_names[team1_id]} vs {team_names[team2_id]}"
+                error_msg = f" Timeout: {team_names[team1_id]} vs {team_names[team2_id]}"
                 print(error_msg)
                 results.append({
                     "team1": team1_id,
@@ -827,7 +729,7 @@ async def run_bot_tournament(active_bots: List[dict], current_user: dict):
                     "output": error_msg
                 })
             except Exception as e:
-                error_msg = f"❌ Error in {team_names[team1_id]} vs {team_names[team2_id]}: {str(e)}"
+                error_msg = f" Error in {team_names[team1_id]} vs {team_names[team2_id]}: {str(e)}"
                 print(error_msg)
                 results.append({
                     "team1": team1_id,
