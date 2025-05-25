@@ -48,6 +48,7 @@ export default function Tournament() {
     message: string;
     details: string;
     match_log?: any[]; 
+    bot_path?: string; 
   } | null>(null);
 
   // Load user and team data on component mount
@@ -194,6 +195,7 @@ export default function Tournament() {
                 message: `Bot evaluated! Winner: ${data.winner}` 
                 ,details : data.output, // Extract output details from backend
                 match_log: data.match_log,
+                bot_path: data.bot_path  // Add this line
                 
             });
             console.log("Match output:", data.output);

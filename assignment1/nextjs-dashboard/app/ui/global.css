@@ -16,3 +16,12 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.tournament-results {
+  transition: all 0.3s ease;
+}
+
+/* Scrollable results */
+.results-container {
+  max-height: 60vh;
+  overflow-y: auto;
+}

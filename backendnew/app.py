@@ -22,6 +22,11 @@ import ast
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from typing import List
+from fastapi import BackgroundTasks
+import json
+from io import StringIO
+import sys
 #to Initialize FastAPI
 app = FastAPI() ## This creates FastAPI application. A FastAPI app is an instance of the FastAPI class — essentially our web application object.we define routes (API endpoints) on this app using decorators like @app.get(), @app.post(), etc.
 #the app is more of like a backend application
@@ -498,6 +503,44 @@ async def upload_bot(file: UploadFile = File(...),
 #.strip() is a python method which removes whitespace (spaces, newlines, tabs) from the beginning and end of a string.
         error_output = result.stderr.strip()
 
+          # Save bot file
+        bot_filename = f"{uuid.uuid4().hex}_bot.py"
+        file_path = os.path.join(UPLOAD_DIR, bot_filename)
+
+        # Get team_id for the user
+        with get_db() as conn:
+         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:  # <-- Use RealDictCursor
+            cursor.execute(
+                "SELECT team_id FROM teams WHERE created_by = %s",
+                (user_id,)
+            )
+            team = cursor.fetchone()
+            if not team:
+                raise HTTPException(status_code=404, detail="Team not found")
+            team_id = team["team_id"]
+
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                # Deactivate old paths
+                cursor.execute(
+                    "UPDATE teams_path SET is_active = FALSE WHERE team_id = %s",
+                    (team_id,)
+                )
+                # Insert new path
+                cursor.execute(
+                    """
+                    INSERT INTO teams_path (team_id, bot_file_path)
+                    VALUES (%s, %s)
+                    RETURNING path_id
+                    """,
+                    (team_id, file_path)
+                )
+                conn.commit()
+
+
+        
+    
+
         if result.returncode != 0:
             raise HTTPException(
                 status_code=500,
@@ -561,7 +604,8 @@ async def upload_bot(file: UploadFile = File(...),
             "status": "success",
             "output": trimmed_output,
             "winner": winner,
-            "match_log": match_log  # <== return this so frontend can render animation
+            "match_log": match_log , # <== return this so frontend can render animation
+            "bot_path": file_path
         })
 
     except subprocess.TimeoutExpired:
@@ -573,11 +617,288 @@ async def upload_bot(file: UploadFile = File(...),
 
             os.remove(file_path)
 
+
+@app.post("/start-round2/")
+async def start_round2(
+    background_tasks: BackgroundTasks,
+    current_user: dict = Depends(get_current_user)
+):
+    # Admin check
+    if current_user["user_id"] != 3:
+        raise HTTPException(status_code=403, detail="Admin access required")
+
+    # Get all active bot paths with team info
+    with get_db() as conn:
+         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:  # <-- This line changed
+            cursor.execute("""
+                SELECT tp.path_id, t.team_id, t.team_name, tp.bot_file_path
+                FROM teams_path tp
+                JOIN teams t ON tp.team_id = t.team_id
+                WHERE tp.is_active = TRUE
+                ORDER BY t.team_score DESC
+            """)
+            active_bots = cursor.fetchall()
+
+    if len(active_bots) < 2:
+        raise HTTPException(status_code=400, detail="Need at least 2 active bots")
+    
+    output_buffer = StringIO()
+    old_stdout = sys.stdout
+    sys.stdout = output_buffer
+
+    try:
+        # Run tournament synchronously just to capture output
+        results = await run_bot_tournament(active_bots, current_user)
+        output_text = output_buffer.getvalue()
+    finally:
+        sys.stdout = old_stdout
+
+    # Start tournament in background
+    # background_tasks.add_task(run_bot_tournament, active_bots, current_user=current_user  )
+    background_tasks.add_task(
+    run_bot_tournament,
+    active_bots=active_bots,
+    current_user=current_user
+    )
+
+    # Run tournament synchronously
+    results = await run_bot_tournament(active_bots, current_user)
+
+    
+    return {"status": "Round 2 tournament started", "bot_count": len(active_bots),"admin_id": current_user["user_id"],"sample_output": output_text.splitlines()}
+
+# async def run_bot_tournament(active_bots: List[tuple]):
+#     results = []
+#     bot_paths = [bot[3] for bot in active_bots]  # bot_file_path is index 3
+    
+#     # Tournament logic (round-robin)
+#     for i in range(len(bot_paths)):
+#         for j in range(i+1, len(bot_paths)):
+#             bot1 = bot_paths[i]
+#             bot2 = bot_paths[j]
+#             team1 = active_bots[i][1]  # team_id
+#             team2 = active_bots[j][1]
+            
+#             try:
+#                 result = subprocess.run(
+#                     [sys.executable, ENGINE_PATH, "--p1", bot1, "--p2", bot2],
+#                     capture_output=True,
+#                     text=True,
+#                     timeout=10
+#                 )
+                
+#                 winner = parse_winner(result.stdout)
+#                 results.append({
+#                     "team1": team1,
+#                     "team2": team2,
+#                     "winner": winner,
+#                     "output": result.stdout
+#                 })
+
+# async def run_bot_tournament(active_bots: List[dict], current_user: dict):
+#     results = []
+#     admin_id = current_user["user_id"]  # Get the admin's user ID
+    
+#     # Access dictionary keys instead of indexes
+#     bot_paths = [bot["bot_file_path"] for bot in active_bots]
+#     team_ids = [bot["team_id"] for bot in active_bots]
+    
+#     # Round-robin matches
+#     for i in range(len(bot_paths)):
+#         for j in range(i+1, len(bot_paths)):
+#             try:
+#                 result = subprocess.run(
+#                     [sys.executable, ENGINE_PATH, "--p1", bot_paths[i], "--p2", bot_paths[j]],
+#                     capture_output=True,
+#                     text=True,
+#                     timeout=10
+#                 )
+                
+#                 winner = parse_winner(result.stdout)
+#                 results.append({
+#                     "team1": team_ids[i],
+#                     "team2": team_ids[j],
+#                     "winner": winner,
+#                     "output": result.stdout
+#                 })
+                
+#             except Exception as e:
+#                 print(f"Match failed : {str(e)}")
+    
+#     # Save results and update scores
+#     with get_db() as conn:
+#         with conn.cursor() as cursor:
+#             # Store tournament results
+#             # cursor.execute(
+#             #     "INSERT INTO tournaments (results) VALUES (%s)",
+#             #     (json.dumps(results),)
+#             # )
+            
+#             # # Update team scores based on wins
+#             # for team_id in set([r["winner"] for r in results if r["winner"] != "unknown"]):
+#             #     cursor.execute(
+#             #         "UPDATE teams SET team_score = team_score + 1 WHERE team_id = %s",
+#             #         (team_id,)
+#             #     )
+#             cursor.execute(
+#             """
+#             INSERT INTO tournaments (created_by, results)
+#             VALUES (%s, %s)
+#             RETURNING tournament_id
+#             """,
+#             (admin_id, json.dumps({
+#                 "matches": results,
+#                 "summary": {
+#                     "total_matches": len(results),
+#                     "winners": [r["winner"] for r in results if r["winner"] != "unknown"]
+#                 }
+#             }))
+#             )
+        
+#         # Update team scores
+#             for team_id in set([r["winner"] for r in results if r["winner"] != "unknown"]):
+#              cursor.execute(
+#                 "UPDATE teams SET team_score = team_score + 3 WHERE team_id = %s",  # 3 points per win
+#                 (team_id,)
+#              )
+            
+#             conn.commit()
+    
+#     return results
+
+async def run_bot_tournament(active_bots: List[dict], current_user: dict):
+    results = []
+    admin_id = current_user["user_id"]
+    
+    # Extract all needed bot information
+    bot_paths = [bot["bot_file_path"] for bot in active_bots]
+    team_ids = [bot["team_id"] for bot in active_bots]
+    team_names = {bot["team_id"]: bot["team_name"] for bot in active_bots}  # Map team_id to name
+    
+    print(f"\n=== Starting Tournament with {len(active_bots)} bots ===")
+    
+    # Round-robin matches
+    for i in range(len(bot_paths)):
+        for j in range(i+1, len(bot_paths)):
+            team1_id = team_ids[i]
+            team2_id = team_ids[j]
+            
+            print(f"\n⚔️ Match: {team_names[team1_id]} vs {team_names[team2_id]}")
+            
+            try:
+                # Run the match
+                result = subprocess.run(
+                    [sys.executable, ENGINE_PATH, "--p1", bot_paths[i], "--p2", bot_paths[j]],
+                    capture_output=True,
+                    text=True,
+                    timeout=10
+                )
+                
+                # Parse and store results
+                winner = parse_winner(result.stdout)
+                winner_name = team_names.get(winner, "Draw/Unknown")
+                
+                match_result = {
+                    "team1": team1_id,
+                    "team1_name": team_names[team1_id],
+                    "team2": team2_id,
+                    "team2_name": team_names[team2_id],
+                    "winner": winner,
+                    "winner_name": winner_name,
+                    "output": result.stdout
+                }
+                results.append(match_result)
+                
+                # Print immediate result
+                print(f"🏆 Winner: {winner_name}")
+                print("📜 Game Log:")
+                print(result.stdout.strip()[:500] + "...")  # Show first 500 chars of output
+                
+            except subprocess.TimeoutExpired:
+                error_msg = f"⏰ Timeout: {team_names[team1_id]} vs {team_names[team2_id]}"
+                print(error_msg)
+                results.append({
+                    "team1": team1_id,
+                    "team1_name": team_names[team1_id],
+                    "team2": team2_id,
+                    "team2_name": team_names[team2_id],
+                    "winner": "unknown",
+                    "winner_name": "Timeout",
+                    "output": error_msg
+                })
+            except Exception as e:
+                error_msg = f"❌ Error in {team_names[team1_id]} vs {team_names[team2_id]}: {str(e)}"
+                print(error_msg)
+                results.append({
+                    "team1": team1_id,
+                    "team1_name": team_names[team1_id],
+                    "team2": team2_id,
+                    "team2_name": team_names[team2_id],
+                    "winner": "unknown",
+                    "winner_name": "Error",
+                    "output": error_msg
+                })
+    
+    # Database operations
+    try:
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                # Save tournament results
+                cursor.execute(
+                    """
+                    INSERT INTO tournaments (created_by, results)
+                    VALUES (%s, %s)
+                    RETURNING tournament_id
+                    """,
+                    (admin_id, json.dumps({
+                        "matches": results,
+                        "summary": {
+                            "total_matches": len(results),
+                            "wins": {team_id: sum(1 for r in results if r["winner"] == team_id) 
+                                    for team_id in set(team_ids)},
+                            "winners": list(set(r["winner"] for r in results 
+                                              if r["winner"] != "unknown"))
+                        }
+                    }))
+                )
+                
+                # Update team scores (3 points per win)
+                for team_id in set(r["winner"] for r in results if r["winner"] != "unknown"):
+                    cursor.execute(
+                        "UPDATE teams SET team_score = team_score + 3 WHERE team_id = %s",
+                        (team_id,)
+                    )
+                
+                conn.commit()
+                
+                print("\n✅ Tournament completed successfully!")
+                print(f"📊 Total matches: {len(results)}")
+                winning_teams = [team_names[t] for t in set(r["winner"] for r in results 
+                                                             if r["winner"] != "unknown")]
+                print(f"🏅 Winning teams: {', '.join(winning_teams) if winning_teams else 'None'}")
+
+    except Exception as db_error:
+        print(f"❌ Database error: {str(db_error)}")
+        # Consider adding retry logic here
+    
+    return results
+
+
+def parse_winner(output: str) -> str:
+    winner_line = next(
+        (line for line in output.splitlines() if "Winner:" in line),
+        None
+    )
+    return winner_line.split(":")[1].strip() if winner_line else "unknown"
+
+
 class TeamResponse(BaseModel): #BaseModel is a class from the Pydantic library — a popular data validation and settings management tool often used with FastAPI.It lets you define data models with type annotations. Type annotations in Python are a way to explicitly declare the expected data type of variables, function parameters, and return values
     team_id: int              #Defines a model TeamResponse with 4 fields.
     team_name: str
     created_by: int
     team_score: int
+
+
     
 
 @app.get("/getteams", response_model=List[TeamResponse])
