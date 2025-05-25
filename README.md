@@ -1,8 +1,8 @@
-## TASK-PROGBATTLE
+# TASK-PROGBATTLE
 
 *A web portal where users can upload their bots to fight against the other bots , and see the simulation video of the match to improve their bots.*
 
-# Submitted by Ritika Batra , 240876
+## Submitted by Ritika Batra , 240876
 
 EXPLAINING THE WORKFLOW OF MY WEBPAGE UI :
 
