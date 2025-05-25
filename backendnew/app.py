@@ -713,8 +713,8 @@ async def run_bot_tournament(active_bots: List[dict], current_user: dict):
                 
                 # Print immediate result
                 print(f"🏆 Winner: {winner_name}")
-                print("📜 Game Log:")
-                print(result.stdout.strip()[:500] + "...")  # Show first 500 chars of output
+                # print("📜 Game Log:")
+                # print(result.stdout.strip()[:500] + "...")  # Show first 500 chars of output
                 
             except subprocess.TimeoutExpired:
                 error_msg = f" Timeout: {team_names[team1_id]} vs {team_names[team2_id]}"
@@ -786,12 +786,54 @@ async def run_bot_tournament(active_bots: List[dict], current_user: dict):
     return results
 
 
+# def parse_winner(output: str) -> str:
+#     winner_line = next(
+#         (line for line in output.splitlines() if "Winner:" in line),
+#         None
+#     )
+#     return winner_line.split(":")[1].strip() if winner_line else "unknown"
+
 def parse_winner(output: str) -> str:
+    """
+    Parses the winner from game output with format:
+    Point to bot2! Score: {'bot1': 0, 'bot2': 1}
+    ...
+    Final Score: {'bot1': 0, 'bot2': 5}
+    Winner: bot2
+    """
+    # First try to find explicit "Winner:" line
     winner_line = next(
-        (line for line in output.splitlines() if "Winner:" in line),
+        (line for line in output.splitlines() if line.strip().startswith("Winner:")),
         None
     )
-    return winner_line.split(":")[1].strip() if winner_line else "unknown"
+    
+    if winner_line:
+        # Extract winner from "Winner: bot2"
+        return winner_line.split(":")[1].strip()
+    
+    # Fallback: Check final score if "Winner:" line is missing
+    final_score_line = next(
+        (line for line in reversed(output.splitlines()) if "Final Score:" in line),
+        None
+    )
+    
+    if final_score_line:
+        try:
+            # Extract score dictionary
+            score_str = final_score_line.split("Final Score:")[1].strip()
+            scores = eval(score_str)  # Converts string to dict
+            
+            # Determine winner by highest score
+            if scores['bot1'] > scores['bot2']:
+                return 'bot1'
+            elif scores['bot2'] > scores['bot1']:
+                return 'bot2'
+            else:
+                return 'draw'
+        except:
+            pass
+    
+    return "unknown"
 
 
 class TeamResponse(BaseModel): #BaseModel is a class from the Pydantic library — a popular data validation and settings management tool often used with FastAPI.It lets you define data models with type annotations. Type annotations in Python are a way to explicitly declare the expected data type of variables, function parameters, and return values

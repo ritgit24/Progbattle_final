@@ -51,6 +51,7 @@ export default function Round2AdminPanel() {
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-center">Round 2 Tournament</h2>
+      <h4>Admin access only</h4>
       
       <div className="flex justify-center mb-6">
         <button
@@ -78,7 +79,7 @@ export default function Round2AdminPanel() {
             <p><strong>Admin ID:</strong> {results.admin_id}</p>
           </div>
 
-          <h3 className="text-xl font-semibold">Raw Tournament Output</h3>
+          <h3 className="text-xl font-semibold">Tournament Output</h3>
           <pre className="p-4 bg-black text-green-400 rounded-md overflow-auto max-h-[60vh]">
             {results.sample_output?.join('\n')}
           </pre>
