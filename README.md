@@ -163,7 +163,7 @@ Leaderboard : Displays all teams ranked by score, and gets refreshed upon clicki
 
 3.UI Structure
 
-- `/signup` and `/login` pages for authentication
+- `/signin` and `/login` pages for authentication
 - `/teams ` for user operations (create team)
 - `/tournament ` for viewing all teams and bot upload
 - Simulation rendered using  HTML Canvas after a match
