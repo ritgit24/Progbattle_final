@@ -29,7 +29,7 @@ When the admin feels that sufficient number of teams have successfully logged in
 
 The tournament starts wherein every bot fights every other bot exactly once. The matches between all teams are listed sequentially and the winners are displayed along.
 
-#DEMO VIDEO
+## DEMO VIDEO
 
 *Here is the google drive link to the demo video of my web application :* https://drive.google.com/file/d/1Kn71yzdNydCp4m6uD6ZbfQPp8yTujjT3/view
 (During the demo video, I uploaded the same bot file for all the active teams hence its showing Draw matches in Round 2 . Kindly consider the same as my backend and frontend login is implemented well.)
@@ -51,7 +51,7 @@ I have used postgres database to structure my web application. My database is  *
 
 *tournaments* : to store the Round-2 results
 
-Backend : 
+## Backend : 
 
 1. My routing file is app.py, which contains my database manager and has the routes :
 /login, /signin, /team, / uploadbot, /getteams, / teams, etc.
@@ -149,7 +149,7 @@ This file_path is then inserted into teams_path database . When the /round2start
  
 I have tried to well comment my app.py file to explain my code to the fullest.
 
-FRONTEND – 
+## FRONTEND – 
 1.	The folder hierarchy stands as
    
           assignment1/nextjs-dashboard
@@ -196,7 +196,7 @@ Leaderboard : Displays all teams ranked by score, and gets refreshed upon clicki
 6.	My nextjs-dashboard folder also contains a global.css file. This file basically combines Tailwind CSS directives with custom styling for <input type="number"> elements.
 
 
-To RUN LOCALLY IN LINUX:-
+## To RUN LOCALLY IN LINUX:-
 
 1. Clone the repository
 
@@ -230,7 +230,7 @@ Use cd.. command to go back to main directory
 
    npm run dev 
 
-TEST USING POSTMAN 
+## TEST USING POSTMAN 
 
 To test the backend routes using postman, run the following steps :
 
