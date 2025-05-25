@@ -1,4 +1,4 @@
-TASK-PROGBATTLE
+#TASK-PROGBATTLE
 
 *A web portal where users can upload their bots to fight against the other bots , and see the simulation video of the match to improve their bots.*
 
@@ -29,10 +29,12 @@ When the admin feels that sufficient number of teams have successfully logged in
 
 The tournament starts wherein every bot fights every other bot exactly once. The matches between all teams are listed sequentially and the winners are displayed along.
 
-*Here is the google drive link to the demo video of my web application :* https://drive.google.com/file/d/1Kn71yzdNydCp4m6uD6ZbfQPp8yTujjT3/view
-(During the demo video, I uploaded the same bot file for all the active teams hence its showing Draw matches in Round 2 . Kindly consider the same.)
+#DEMO VIDEO
 
-*WORK/ RESEARCH*
+*Here is the google drive link to the demo video of my web application :* https://drive.google.com/file/d/1Kn71yzdNydCp4m6uD6ZbfQPp8yTujjT3/view
+(During the demo video, I uploaded the same bot file for all the active teams hence its showing Draw matches in Round 2 . Kindly consider the same as my backend and frontend login is implemented well.)
+
+#*WORK/ RESEARCH*
 
 EXPLAINING MY CODE : 
 
@@ -125,8 +127,26 @@ For round 2,
            # Run match between bot[i] and bot[j]
 
 This loop code ensures that the matches are done sequnetially and 2 bots fight each other exactly once.
-       
 
+The line , which is encountered upon hitting /uploadbot/ route,
+
+       file_path = os.path.join(UPLOAD_DIR, bot_filename)
+
+Combines the upload directory path with a generated filename to create a full file path
+
+Example result: ./uploads/bots/3b9d5f21_userbot.py
+
+This file_path is then inserted into teams_path database . When the /round2start/ route is hit, the files of various teams are traced down using this code and the bots are made to fight each other
+                
+		cursor.execute("""
+                SELECT tp.path_id, t.team_id, t.team_name, tp.bot_file_path
+                FROM teams_path tp
+                JOIN teams t ON tp.team_id = t.team_id
+                WHERE tp.is_active = TRUE
+                ORDER BY t.team_score DESC
+                """)
+
+ 
 I have tried to well comment my app.py file to explain my code to the fullest.
 
 FRONTEND – 
