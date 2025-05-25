@@ -1,6 +1,6 @@
 TASK-PROGBATTLE
 
-*A web portal where users can upload their bots to fight against the other bots and see the simulation video of the match to improve their bots.*
+*A web portal where users can upload their bots to fight against the other bots , and see the simulation video of the match to improve their bots.*
 
 EXPLAINING THE WORKFLOW OF MY WEBPAGE UI :
 
@@ -21,8 +21,16 @@ I have displayed the match rules and scoring policies for teams on the screen.
 
 The users can submit their bot files by clicking on the “Submit Bot” option to fight against  the system bot in ROUND 1 ,and wait for the match results to be displayed. 
 Once the match is over and the match details and winner are updated on the screen, the team’s score is also updated in the database. 
-Consequenly, a show simulation button appears on the screen. Upon clicking this button, a simulation of the bot match is shown on the screen using HTML canvas, done using the frontend.
+Consequenly, a show simulation button appears on the screen. Upon clicking this button, a simulation of the bot match is shown on the screen using *HTML canvas*, rendered at the frontend.
 Upon clicking the refresh button, the team’s updated scores are visible on the leaderboard too.
+
+Only the admin has the access to start Round-2 where the team bots fight against each other.
+When the admin feels that sufficient number of teams have successfully logged in and uploaded their files correctly, the admin ( Inwith a decided user_id in the backend ) goes to a seperate route which accessible only by the admin through jwt authorization and clicks on Start Tournament. The tournament is fought amongst the active teams only(as per the database ).
+
+The tournament starts wherein every bot fights every other bot exactly once. The matches between all teams are listed sequentially and the winners are displayed along.
+
+*Here is the google drive link to the demo video of my web application :* https://drive.google.com/file/d/1Kn71yzdNydCp4m6uD6ZbfQPp8yTujjT3/view
+(During the demo video, I uploaded the same bot file for all the active teams hence its showing Draw matches. Kindly consider the same.)
 
 *WORK/ RESEARCH*
 
@@ -30,6 +38,16 @@ EXPLAINING MY CODE :
 
 I have submitted a main folder called Campus Compass, which has 2 subfolders : assignment1/nextjs-dashboard and backendnew. 
 My backendnew contains the backend files, written in python and the former folder contains the frontend written in nextjs. 
+
+I have used postgres database to structure my web application. My database is  *progbattle* and it has 4 tables . 
+
+*users* : to store name, email and hashed passwords(has user_id as serial primary key)
+
+*teams* : to store team name, team score , and created by which user(with reference to user id)
+
+*team_path* : to store the bot path locations of bots uploaded by teams and mark these teams as active
+
+*tournaments* : to store the Round-2 results
 
 Backend : 
 
@@ -99,6 +117,14 @@ Status of the operation
 The match logs
 
 •	The code then deletes the temporary uploaded bot file from disk to avoid clutter. I use the match logs to make the animation video of the match in the frontend.
+
+For round 2, 
+        
+	for i in range(len(bot_paths)):               # Outer loop (i)
+           for j in range(i+1, len(bot_paths)):      # Inner loop (j)
+           # Run match between bot[i] and bot[j]
+
+This loop code ensures that the matches are done sequnetially and 2 bots fight each other exactly once.
        
 
 I have tried to well comment my app.py file to explain my code to the fullest.
